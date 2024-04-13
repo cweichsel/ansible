@@ -4,23 +4,15 @@
   become: true
   tasks:
 
-  - name: Debian / Ubuntu - update repository index
+  - name: Debian / Ubuntu - update repository index and upgrade packages
     apt:
       update_cache: yes
-    when: ansible_distribution in ["Ubuntu", "Debian"]
-
-  - name: Debian / Ubuntu - upgrade packages
-    apt:
       upgrade: yes
     when: ansible_distribution in ["Ubuntu", "Debian"]
 
-  - name: RHEL - update repository index
+  - name: RHEL - dnf update
     dnf:
       update_cache: yes
-    when: ansible_distribution == "RedHat"
-
-  - name: RHEL - upgrade packages
-    dnf:
       name: "*"
       state: latest
     when: ansible_distribution == "RedHat"
