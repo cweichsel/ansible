@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Debian / Ubuntu - remove apache2 package
+    package:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: absent
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+ 
+  - name: RHEL - remove httpd package
+    package:
+      name:
+        - httpd
+        - php
+      state: absent
+    when: ansible_distribution == "RedHat"
