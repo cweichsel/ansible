@@ -30,7 +30,7 @@
          - libapache2-mod-php
        state: latest
      when: ansible_distribution == "Ubuntu"
- 
+
    - name: install apache and php for RedHat servers
      tags: apache,httpd,redhat
      dnf:
@@ -48,3 +48,20 @@
        owner: root
        group: root
        mode: 0644
+
+ - hosts: all
+   become: true
+   tasks:
+
+   - name: install unzip
+     package:
+      name: unzip
+
+   - name: install terraform
+     unarchive:
+      src: https://releases.hashicorp.com/terraform/1.8.1/terraform_1.8.1_linux_arm.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
