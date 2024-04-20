@@ -1,0 +1,27 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Debian / Ubuntu - update repository index and upgrade packages
+    apt:
+      update_cache: yes
+      upgrade: yes
+    when: ansible_distribution in ["Ubuntu", "Debian"]
+
+  - name: RHEL - dnf update
+    dnf:
+      update_cache: yes
+      name: "*"
+      state: latest
+    when: ansible_distribution == "RedHat"
+
+  - name: Install packages
+    apt:
+      name:
+        - tmux
+        - dnsutils
+        - cifs-utils
+        - smb-client
+    when: ansible_distribution in ["Ubuntu", "Debian"]
