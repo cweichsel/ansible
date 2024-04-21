@@ -4,25 +4,44 @@
   become: true
   tasks:
 
-  - name: Debian / Ubuntu - update repository index and upgrade packages
+  - name: update repository index and upgrade packages (Debian)
     apt:
       update_cache: yes
       upgrade: yes
     when: ansible_distribution in ["Ubuntu", "Debian"]
 
-  - name: RHEL - dnf update
+  - name: dnf update (RHEL)
     dnf:
       update_cache: yes
       name: "*"
       state: latest
     when: ansible_distribution == "RedHat"
 
-  - name: Install packages
+  - name: Install packages (Debian)
     apt:
       name:
         - tmux
         - dnsutils
         - cifs-utils
-        - smb-client
+        - smbclient
         - vim
     when: ansible_distribution in ["Ubuntu", "Debian"]
+
+  - name: create cw user (Debian)
+    user:
+      name: cw
+      append: true
+      groups: cw,sudo
+    when: ansible_distribution in ["Ubuntu", "Debian"]
+
+  - name: create cw user (RHEL)
+    user:
+      name: cw
+      append: true
+      groups: cw,wheel
+    when: ansible_distribution == "RedHat"
+
+  - name: add ssh-keys
+    authorized_key:
+      user: cw
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDO4w+ieE41M5/8Vg6NLzW/MxTavDHghd/Nm8AJTWwbT weichsel@cwDesktop"
