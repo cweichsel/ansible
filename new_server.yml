@@ -44,4 +44,16 @@
   - name: add ssh-keys
     authorized_key:
       user: cw
-      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDO4w+ieE41M5/8Vg6NLzW/MxTavDHghd/Nm8AJTWwbT weichsel@cwDesktop"
+      state: present
+      key: '{{ item }}'
+    with_file:
+      - public_keys/desktop_id_ed25519.pub
+      - public_keys/glurak_id_ed25519.pub
+  
+  - name: remove ssh-keys
+    authorized_key:
+      user: cw
+      state: absent
+      key: '{{ item }}'
+    with_file:
+      - public_keys/pc22_id_ed25519.pub
