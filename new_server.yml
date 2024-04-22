@@ -49,11 +49,11 @@
     with_file:
       - public_keys/desktop_id_ed25519.pub
       - public_keys/glurak_id_ed25519.pub
-  
-  - name: remove ssh-keys
-    authorized_key:
-      user: cw
-      state: absent
-      key: '{{ item }}'
-    with_file:
-      - public_keys/pc22_id_ed25519.pub
+
+#  - name: remove ssh-keys
+#    authorized_key:
+#      user: cw
+#      state: absent
+#      key: '{{ item }}'
+#    with_file:
+#      - public_keys/pc22_id_ed25519.pub
