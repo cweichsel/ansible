@@ -1,0 +1,4 @@
+- name: add ssh-key
+  authorized_key:
+    user: cw
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDO4w+ieE41M5/8Vg6NLzW/MxTavDHghd/Nm8AJTWwbT weichsel@cwDesktop"
