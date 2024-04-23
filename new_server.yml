@@ -27,6 +27,16 @@
         - vim
     when: ansible_distribution in ["Ubuntu", "Debian"]
 
+  - name: Install packages (RHEL)
+    apt:
+      name:
+        - tmux
+        - bind-utils
+        - cifs-utils
+        - samba-client
+        - vim
+    when: ansible_distribution == "RedHat"
+  
   - name: create cw user (Debian)
     user:
       name: cw
@@ -49,6 +59,22 @@
     with_file:
       - public_keys/desktop_id_ed25519.pub
       - public_keys/glurak_id_ed25519.pub
+
+  - name: add sudoers file for cw
+    tags: always
+    copy:
+      src: sudoer_cw
+      dest: /etc/sudoers.d/cw
+      owner: root
+      group: root
+      mode: 0440
+
+
+#    - name: .bashrc cw prompt setzen
+#    lineinfile:
+#      path: /home/cw/.bashrc
+#      line: 
+
 
 #  - name: remove ssh-keys
 #    authorized_key:
