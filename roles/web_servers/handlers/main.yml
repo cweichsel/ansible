@@ -1,0 +1,4 @@
+- name: restart httpd (RHEL)
+  service:
+    name: "{{ apache_service }}"
+    state: restarted
